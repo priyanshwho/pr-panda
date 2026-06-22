@@ -34,5 +34,5 @@ export const githubReposInfiniteQuery = infiniteQueryOptions({
             return lastPage.page + 1
         }
     },
-    staleTime: REPOS_STALE_TIME
+    staleTime: REPOS_STALE_TIME //for how long we store the data in cache ,we refresh it in every 10 min 
 })
