@@ -124,13 +124,17 @@ export function buildRepoNamespace(repoFullName: string) {
     for (let start = 0; start < chunks.length; start += UPSERT_BATCH_SIZE) {
       const batch = chunks.slice(start, start + UPSERT_BATCH_SIZE);
   
-      const records = batch.map((chunk) => ({
-        id: chunk.id,
-        text: chunk.text,
-        filePath: chunk.filePath,
-      }));
+      const records = batch
+        .map((chunk) => ({
+          id: chunk.id,
+          text: chunk.text.trim(),
+          filePath: chunk.filePath,
+        }))
+        .filter((record) => record.text !== "");
   
-      await index.namespace(namespace).upsertRecords({ records });
+      if (records.length > 0) {
+        await index.namespace(namespace).upsertRecords({ records });
+      }
     }
   }
 
