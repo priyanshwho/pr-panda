@@ -82,7 +82,7 @@ export function RepoList() {
     
         const observer = new IntersectionObserver(
           (entries) => {
-            if (entries[0]?.isIntersecting) {
+            if (entries[0]?.isIntersecting) { //if the last repo is visible we call the next page 
               fetchNextPage();
             }
           },
