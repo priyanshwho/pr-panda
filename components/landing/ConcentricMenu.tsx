@@ -241,7 +241,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
             <motion.div
               variants={labelVariants}
               animate={isOpen ? 'open' : 'closed'}
-              className={`absolute top-4 md:top-5 font-sans font-black text-sm md:text-base tracking-wider uppercase pointer-events-none select-none ${getRingColors(5).text}`}
+              className={`absolute top-4 md:top-5 font-display font-black text-base md:text-lg tracking-wider uppercase pointer-events-none select-none ${getRingColors(5).text}`}
             >
               {currentSection === 'faqs' ? '• faqs' : 'faqs'}
             </motion.div>
@@ -266,7 +266,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
             <motion.div
               variants={labelVariants}
               animate={isOpen ? 'open' : 'closed'}
-              className={`absolute top-4 md:top-5 font-sans font-black text-sm md:text-base tracking-wider uppercase pointer-events-none select-none ${getRingColors(4).text}`}
+              className={`absolute top-4 md:top-5 font-display font-black text-base md:text-lg tracking-wider uppercase pointer-events-none select-none ${getRingColors(4).text}`}
             >
               {currentSection === 'testimonials' ? '• testimonials' : 'testimonials'}
             </motion.div>
@@ -291,7 +291,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
             <motion.div
               variants={labelVariants}
               animate={isOpen ? 'open' : 'closed'}
-              className={`absolute top-4 md:top-5 font-sans font-black text-sm md:text-base tracking-wider uppercase pointer-events-none select-none ${getRingColors(3).text}`}
+              className={`absolute top-4 md:top-5 font-display font-black text-base md:text-lg tracking-wider uppercase pointer-events-none select-none ${getRingColors(3).text}`}
             >
               {currentSection === 'pricing' ? '• pricing' : 'pricing'}
             </motion.div>
@@ -316,7 +316,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
             <motion.div
               variants={labelVariants}
               animate={isOpen ? 'open' : 'closed'}
-              className={`absolute top-4 md:top-5 font-sans font-black text-sm md:text-base tracking-wider uppercase pointer-events-none select-none ${getRingColors(2).text}`}
+              className={`absolute top-4 md:top-5 font-display font-black text-base md:text-lg tracking-wider uppercase pointer-events-none select-none ${getRingColors(2).text}`}
             >
               {currentSection === 'about' ? '• about' : 'about'}
             </motion.div>
@@ -341,7 +341,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
             <motion.div
               variants={labelVariants}
               animate={isOpen ? 'open' : 'closed'}
-              className={`absolute top-4 md:top-5 font-sans font-black text-sm md:text-base tracking-wider uppercase pointer-events-none select-none ${getRingColors(1).text}`}
+              className={`absolute top-4 md:top-5 font-display font-black text-base md:text-lg tracking-wider uppercase pointer-events-none select-none ${getRingColors(1).text}`}
             >
               {currentSection === 'home' ? '• home' : 'home'}
             </motion.div>
