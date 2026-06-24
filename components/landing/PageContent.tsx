@@ -48,7 +48,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection }) => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-32 pb-44 flex flex-col min-h-screen"
+        className="w-full max-w-6xl mx-auto px-6 pt-12 pb-44 flex flex-col min-h-screen"
       >
         {/* Title Section */}
         <div className="max-w-4xl flex flex-col justify-center">
@@ -59,17 +59,29 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection }) => {
             variants={childVariants} 
             className="font-display font-black text-6xl md:text-8xl tracking-tighter leading-none text-foreground select-none"
           >
-            the power of <br />
-            <span className="text-foreground inline-block relative">
-              automation
-              <motion.span 
-                initial={{ width: 0 }}
-                animate={{ width: '102%' }}
-                transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-0 bottom-2 h-2 bg-primary/20 -z-10" 
-              />
+            code reviews on <br />
+            <span className="text-foreground inline-block relative pr-2">
+              autopilot
+              <svg className="absolute left-0 -bottom-2.5 w-[105%] h-4 pointer-events-none" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
+                  d="M 2,3 Q 50,8 98,3"
+                  fill="transparent"
+                  stroke="#ef4444"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+              </svg>
             </span>
           </motion.h1>
+          <motion.p 
+            variants={childVariants}
+            className="mt-6 text-sm md:text-base text-muted-foreground leading-relaxed font-sans max-w-2xl"
+          >
+            Context-aware scans, RAG codebase index lookups, security auditing, and line-by-line feedback posted directly to your GitHub pull requests in seconds.
+          </motion.p>
         </div>
 
         {/* Theme-Aware Hero Image Container */}
