@@ -1,40 +1,54 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { ArrowRight } from "@phosphor-icons/react";
 
-export function Header() {
+interface HeaderProps {
+  onLogoClick: () => void;
+  currentSection: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onLogoClick, currentSection }) => {
   const { data: session, isPending } = authClient.useSession();
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
-          <span className="text-2xl">🐼</span>
-          <span className="bg-gradient-to-r from-foreground via-foreground/90 to-primary bg-clip-text text-xl font-black tracking-wider text-transparent uppercase">
-            PR PANDA
+    <header className="fixed top-0 left-0 w-full z-45 px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference text-white">
+      <button 
+        onClick={onLogoClick}
+        className="font-display font-black text-2xl tracking-tighter cursor-pointer hover:opacity-70 transition-opacity uppercase"
+        aria-label="PR PANDA Home"
+      >
+        pr panda
+      </button>
+      
+      <div className="flex items-center gap-6 text-sm font-sans tracking-widest uppercase font-bold">
+        {currentSection !== 'home' && (
+          <span className="hidden sm:inline-block font-medium tracking-normal text-xs bg-white/20 backdrop-blur-xs px-3 py-1 rounded-full border border-white/10 uppercase">
+            {currentSection}
           </span>
-        </Link>
-
-        <div className="flex items-center gap-4">
-          <ModeToggle />
-          {isPending ? (
-            <div className="h-9 w-28 animate-pulse rounded-md bg-muted" />
-          ) : session ? (
-            <Link href="/dashboard" className={cn(buttonVariants({ size: "sm" }), "gap-1.5 font-bold uppercase tracking-wider text-[11px]")}>
-              Dashboard <ArrowRight className="size-4" />
-            </Link>
-          ) : (
-            <Link href="/sign-in" className={cn(buttonVariants({ size: "sm" }), "font-bold uppercase tracking-wider text-[11px]")}>
-              Get Started
-            </Link>
-          )}
-        </div>
+        )}
+        
+        {isPending ? (
+          <span className="text-xs tracking-wider opacity-50">loading...</span>
+        ) : session ? (
+          <Link 
+            href="/dashboard" 
+            className="text-xs tracking-wider cursor-pointer hover:underline underline-offset-4 decoration-2"
+          >
+            dashboard
+          </Link>
+        ) : (
+          <Link 
+            href="/sign-in" 
+            className="text-xs tracking-wider cursor-pointer hover:underline underline-offset-4 decoration-2"
+          >
+            get started
+          </Link>
+        )}
       </div>
     </header>
   );
-}
+};
+
+export default Header;
