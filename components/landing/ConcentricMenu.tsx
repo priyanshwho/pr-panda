@@ -39,10 +39,10 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
 
   // Gallery posters fanning behind
   const posters: Poster[] = [
-    { id: 'p1', title: 'Design is Power', img: '/poster_swiss.png', angle: -45 },
-    { id: 'p2', title: 'Bauhaus Composition', img: '/poster_geometric.png', angle: -20 },
-    { id: 'p3', title: 'The Future of Art', img: '/poster_green.png', angle: 10 },
-    { id: 'p4', title: 'Amsterdam Studio', img: '/poster_architecture.png', angle: 35 },
+    { id: 'p1', title: 'Panda Harmony', img: '/aesthetic_panda_1.png', angle: -45 },
+    { id: 'p2', title: 'Minimalist Form', img: '/aesthetic_panda_2.png', angle: -20 },
+    { id: 'p3', title: 'Geometric Landscape', img: '/aesthetic_panda_3.png', angle: 10 },
+    { id: 'p4', title: 'Symmetry & Form', img: '/aesthetic_panda_4.png', angle: 35 },
   ];
 
   // Helper to get active ring size dynamically (stable index 0 center)

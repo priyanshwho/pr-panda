@@ -10,14 +10,20 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
 
   return (
-    <div className="panda-theme relative min-h-screen bg-[#f2f2f2] text-black overflow-x-hidden selection:bg-black selection:text-white flex flex-col font-sans">
-      {/* Visual background grid pattern for premium aesthetics */}
+    <div className="relative min-h-screen bg-background text-foreground selection:bg-primary/20 flex flex-col overflow-x-hidden font-sans">
+      {/* Background Decorative Blobs */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 h-[500px] w-[500px] rounded-full bg-primary/5 blur-[120px] dark:bg-primary/10" />
+        <div className="absolute top-1/3 right-1/4 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-[100px] dark:bg-violet-500/10" />
+      </div>
+
+      {/* Visual background grid pattern for premium aesthetics, adapts dynamically via currentColor */}
       <div 
-        className="fixed inset-0 pointer-events-none opacity-5 z-0" 
+        className="fixed inset-0 pointer-events-none opacity-5 dark:opacity-[0.03] z-0 text-foreground" 
         style={{
           backgroundImage: `
-            linear-gradient(to right, #000 1px, transparent 1px),
-            linear-gradient(to bottom, #000 1px, transparent 1px)
+            linear-gradient(to right, currentColor 1px, transparent 1px),
+            linear-gradient(to bottom, currentColor 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }}
@@ -37,7 +43,7 @@ export default function Home() {
       </main>
 
       {/* Interactive Concentric Ring Menu container - zero height to allow background clicks */}
-      <div className="fixed bottom-0 left-0 w-full h-0 z-30 overflow-visible">
+      <div className="fixed bottom-0 left-0 w-full h-0 z-40 overflow-visible">
         <ConcentricMenu 
           onNavigate={(section) => setActiveSection(section)} 
           currentSection={activeSection} 
@@ -45,7 +51,7 @@ export default function Home() {
       </div>
 
       {/* Modern minimal footer branding */}
-      <footer className="fixed bottom-4 left-6 md:left-12 pointer-events-none select-none z-10 text-[10px] font-sans text-black/30 uppercase tracking-widest">
+      <footer className="fixed bottom-4 left-6 md:left-12 pointer-events-none select-none z-10 text-[10px] font-sans text-muted-foreground/30 uppercase tracking-widest">
         © 2026 pr panda. all rights reserved.
       </footer>
     </div>
