@@ -192,7 +192,7 @@ function SubscriptionTab({
           Manage your plan and billing for AI code reviews.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div
           className={cn(
             "flex flex-wrap items-center justify-between gap-4 rounded-none border p-4",

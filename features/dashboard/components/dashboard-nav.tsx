@@ -59,14 +59,17 @@ export function DashboardNav({ recentConversations = [], showUsageWarning = fals
       <SidebarGroup>
         <SidebarGroupLabel>Workspace</SidebarGroupLabel>
         <SidebarGroupContent>
-          <SidebarMenu>
+          <SidebarMenu className="gap-1.5">
             {DASHBOARD_NAV_ITEMS.map((item) => {
               const Icon = NAV_ICONS[item.icon];
               const active = isNavActive(pathname, item.href);
               const isSettings = item.href.includes("settings");
 
               return (
-                <SidebarMenuItem key={item.href}>
+                <SidebarMenuItem key={item.href} className="relative">
+                  {active && (
+                    <div className="absolute left-[-8px] top-1.5 bottom-1.5 w-[3px] rounded-r-md bg-amber-500 z-10" />
+                  )}
                   <SidebarMenuButton
                     isActive={active}
                     tooltip={item.title}

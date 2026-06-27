@@ -34,7 +34,7 @@ export async function DashboardSidebar({ user, plan = "Pro" }: DashboardSidebarP
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="relative overflow-hidden border-b border-border/40 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent py-3">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
