@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AiReviewMarkdown } from "@/features/pull-requests/components/ai-review-markdown";
 import { DASHBOARD_ROUTES } from "@/features/dashboard/lib/routes";
+import { ReReviewButton } from "@/features/reviews/components/re-review-button";
 
 type PullRequestDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -44,6 +45,7 @@ export default async function PullRequestDetailPage({
         <Button nativeButton={false} size="sm" variant="outline" render={<Link href={DASHBOARD_ROUTES.pullRequest} />}>
           &larr; Back to Pull Requests
         </Button>
+        <ReReviewButton prId={pr.id} disabled={pr.status === "processing" || pr.status === "pending"} />
       </div>
 
       <DashboardHeader
