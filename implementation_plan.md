@@ -108,4 +108,4 @@ The assistant is configured to know:
 - [ ] **[5.7] Multi-Channel Notifications**: Slack webhook integrations + Resend transaction emails.
 - [x] **[5.8] PR Re-review trigger**: Manual trigger to re-review latest head commit.
 - [x] **[5.9] Codebase Q&A (RAG)**: Chat query search over vector embeddings.
-- [ ] **[5.10] Review Analytics**: Visual dashboards showing metrics over time (Recharts).
+- [x] **[5.10] Review Analytics**: Visual dashboards showing metrics over time (Recharts).

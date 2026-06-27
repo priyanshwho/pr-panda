@@ -9,6 +9,7 @@ import {
   GithubLogo,
   Gear,
   Robot,
+  ChartBar,
 } from "@phosphor-icons/react";
 
 import {
@@ -31,6 +32,7 @@ const NAV_ICONS = {
   github: GithubLogo,
   settings: Gear,
   robot: Robot,
+  "chart-bar": ChartBar,
 } as const;
 
 function isNavActive(pathname: string, href: DashboardRoute) {

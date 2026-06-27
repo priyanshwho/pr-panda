@@ -4,6 +4,7 @@ export const DASHBOARD_ROUTES = {
   pullRequest:"/dashboard/pull-requests",
   github: "/dashboard/github",
   settings: "/dashboard/settings",
+  analytics: "/dashboard/analytics",
 } as const;
 
 export type DashboardRoute =
@@ -29,6 +30,11 @@ export const DASHBOARD_NAV_ITEMS = [
     title: "GitHub App",
     href: DASHBOARD_ROUTES.github,
     icon: "github" as const,
+  },
+  {
+    title: "Analytics",
+    href: DASHBOARD_ROUTES.analytics,
+    icon: "chart-bar" as const,
   },
   {
     title: "Settings",
