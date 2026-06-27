@@ -99,7 +99,7 @@ The assistant is configured to know:
 ---
 
 ## Part 5 — Major Features (10)
-- [ ] **[5.1] PR Review Diff Viewer**: Split-screen view of file diff alongside AI review comments.
+- [x] **[5.1] PR Review Diff Viewer**: Split-screen view of file diff alongside AI review comments.
 - [x] **[5.2] Review History Timeline**: Paginated, filterable timeline of all historical code reviews.
 - [ ] **[5.3] Teams & Organization Support**: Shared billing and installations, admin seat management.
 - [ ] **[5.4] Webhook Activity Log**: Debug log page showing received webhooks and review actions.
