@@ -7,8 +7,8 @@
 | **Phase 1** | Performance (loading skeletons, parallel queries) + UI Redesign (warm colors, spacing) | **COMPLETED** |
 | **Phase 2** | AI Assistant (Groq, saved history, sidebar panel) | **COMPLETED** |
 | **Phase 3** | 10 Minor Features | **COMPLETED** |
-| **Phase 4** | Major Features 5.8 (Re-review), 5.1 (Diff Viewer), 5.2 (History) | **TODO** |
-| **Phase 5** | Major Features 5.9 (Codebase Q&A), 5.10 (Analytics) | **TODO** |
+| **Phase 4** | Major Features 5.8 (Re-review), 5.1 (Diff Viewer), 5.2 (History) | **COMPLETED** |
+| **Phase 5** | Major Features 5.9 (Codebase Q&A), 5.10 (Analytics) | **COMPLETED** |
 | **Phase 6** | Major Features 5.3 (Teams) to 5.7 (Notifications) | **TODO** |
 
 ### Decisions Captured
