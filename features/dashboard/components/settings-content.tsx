@@ -250,7 +250,7 @@ export function SettingsContent({
   usage,
 }: SettingsContentProps) {
   return (
-    <div className="flex flex-1 flex-col p-6">
+    <div className="flex flex-1 flex-col p-8 lg:p-10">
       <Tabs defaultValue="profile" className="w-full max-w-2xl">
         <TabsList>
           <TabsTrigger value="profile">Profile</TabsTrigger>

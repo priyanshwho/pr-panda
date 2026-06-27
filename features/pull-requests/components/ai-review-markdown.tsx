@@ -1,13 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { Copy, Check } from "@phosphor-icons/react";
 
 type AiReviewMarkdownProps = {
   content: string;
 };
 
 export function AiReviewMarkdown({ content }: AiReviewMarkdownProps) {
+  const [copied, setCopied] = useState(false);
+
   if (!content) return null;
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      toast.success("Review copied to clipboard!");
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error("Failed to copy review.");
+    }
+  };
 
   const blocks: React.ReactNode[] = [];
   const lines = content.split("\n");
@@ -165,5 +180,26 @@ export function AiReviewMarkdown({ content }: AiReviewMarkdownProps) {
   // Final flush
   flushBlock(lines.length);
 
-  return <div className="space-y-1 font-sans">{blocks}</div>;
+  return (
+    <div className="relative group/review">
+      <button
+        onClick={copyToClipboard}
+        className="absolute right-0 top-[-3.5rem] inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-all shadow-xs"
+        title="Copy raw markdown to clipboard"
+      >
+        {copied ? (
+          <>
+            <Check className="size-3.5 text-emerald-500" />
+            <span className="text-emerald-500">Copied!</span>
+          </>
+        ) : (
+          <>
+            <Copy className="size-3.5" />
+            <span>Copy Review</span>
+          </>
+        )}
+      </button>
+      <div className="space-y-1 font-sans">{blocks}</div>
+    </div>
+  );
 }

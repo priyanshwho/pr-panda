@@ -139,7 +139,7 @@ export function GithubConnectCard({
     }
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-6">
+        <div className="flex flex-1 flex-col gap-8 p-8 lg:p-10">
             <Card className={cn("max-w-2xl transition-colors", cardBorderClass)}>
                 <CardHeader>
                     <div className="flex items-start justify-between gap-4">
@@ -163,7 +163,7 @@ export function GithubConnectCard({
                         <span className={statusBadge(statusTone)}>{statusLabel}</span>
                     </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
                     <ConnectionDetails connected={connected} accountLogin={accountLogin} />
                 </CardContent>
                 <CardFooter className="flex flex-wrap gap-2">

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
 import { DASHBOARD_ROUTES } from "@/features/dashboard/lib/routes";
 import { DashboardNav } from "@/features/dashboard/components/dashboard-nav";
 import { SidebarUserButton } from "@/features/dashboard/components/sidebar-user-button";
@@ -17,13 +16,22 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { UserMenuUser } from "@/features/auth/components/user-menu";
+import { getRecentConversations } from "@/features/ai-assistant/server/conversations";
+import { requireAuth } from "@/features/auth/actions";
+import { getUsageSummary } from "@/features/billing/server/usage";
 
 type DashboardSidebarProps = {
   user: UserMenuUser;
   plan?: string;
 };
 
-export function DashboardSidebar({ user, plan = "Pro" }: DashboardSidebarProps) {
+export async function DashboardSidebar({ user, plan = "Pro" }: DashboardSidebarProps) {
+  // Fetch recent AI conversations for the panel's history section
+  const session = await requireAuth();
+  const recentConversations = await getRecentConversations(session.user.id, 8);
+  const usage = await getUsageSummary(session.user.id);
+  const showUsageWarning = usage.limit ? (usage.used / usage.limit) >= 0.8 : false;
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -44,8 +52,7 @@ export function DashboardSidebar({ user, plan = "Pro" }: DashboardSidebarProps) 
                     />
                   </span>
                   <span className="grid flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden">
-                    <span className="truncate font-medium">PR PANDA</span>
-                   
+                    <span className="truncate font-semibold tracking-tight">PR PANDA</span>
                   </span>
                 </Link>
               }
@@ -54,7 +61,7 @@ export function DashboardSidebar({ user, plan = "Pro" }: DashboardSidebarProps) 
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <DashboardNav />
+        <DashboardNav recentConversations={recentConversations} showUsageWarning={showUsageWarning} />
       </SidebarContent>
       <SidebarFooter>
         <SidebarSeparator />

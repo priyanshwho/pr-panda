@@ -6,6 +6,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { UserMenuUser } from "@/features/auth/components/user-menu";
+import { KeyboardShortcutsWrapper } from "@/components/dashboard/keyboard-shortcuts-wrapper";
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -22,7 +23,10 @@ export function DashboardShell({
     <TooltipProvider>
       <SidebarProvider>
         <DashboardSidebar user={user} plan={plan} />
-        <SidebarInset className="min-h-svh">{children}</SidebarInset>
+        <SidebarInset className="min-h-svh">
+          {children}
+          <KeyboardShortcutsWrapper />
+        </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>
   );

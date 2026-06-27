@@ -57,19 +57,32 @@ export default async function DashboardPage() {
     );
   }
 
-  const { repoSummary, prSummary, recentActivity, installation } = overview;
+  const { repoSummary, prSummary, recentActivity, installation, avgReviewTimeMinutes, mostActiveRepo } = overview;
 
   // Calculate sync completion percentage
   const syncPercentage = repoSummary && repoSummary.totalRepos > 0
     ? Math.round((repoSummary.syncedRepos / repoSummary.totalRepos) * 100)
     : 0;
 
+  function formatDuration(minutes: number): string {
+    if (minutes <= 0) return "N/A";
+    if (minutes < 60) return `${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    if (hours < 24) {
+      return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}m` : `${hours}h`;
+    }
+    const days = Math.floor(hours / 24);
+    const remainingHours = hours % 24;
+    return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
+  }
+
   return (
     <>
       {header}
-      <div className="flex flex-col gap-6 p-6">
+      <div className="flex flex-col gap-8 p-8 lg:p-10">
         {/* Statistics Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div className="flex flex-col gap-1">
@@ -138,6 +151,52 @@ export default async function DashboardPage() {
               </div>
               <p className="text-xs text-muted-foreground mt-1">
                 {prSummary?.processing} currently processing, {prSummary?.pending} in queue
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-sm font-medium">Avg Review Time</CardTitle>
+                <CardDescription className="text-xs">Average completion time per review</CardDescription>
+              </div>
+              <svg className="size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {avgReviewTimeMinutes > 0 ? formatDuration(avgReviewTimeMinutes) : "N/A"}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Based on all reviewed pull requests
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-sm font-medium">Most Active Repository</CardTitle>
+                <CardDescription className="text-xs">Repository with most reviews this month</CardDescription>
+              </div>
+              <svg className="size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5-6h7.5A2.25 2.25 0 0 1 13.5 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 3.75 4.5Z" />
+              </svg>
+            </CardHeader>
+            <CardContent>
+              <div className="text-base font-semibold truncate pt-1" title={mostActiveRepo ?? "None"}>
+                {mostActiveRepo ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400 ring-1 ring-inset ring-amber-500/25">
+                    {mostActiveRepo.split("/")[1] || mostActiveRepo}
+                  </span>
+                ) : (
+                  <span className="text-muted-foreground font-normal text-sm">No activity yet</span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1.5">
+                {mostActiveRepo ? "Highest review count this month" : "No pull requests reviewed this month"}
               </p>
             </CardContent>
           </Card>

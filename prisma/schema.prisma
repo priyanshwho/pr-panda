@@ -32,6 +32,7 @@ model User {
   sessions               Session[]
   accounts               Account[]
   githubInstallation     GithubInstallation?
+  aiConversations        AiConversation[]
 
   @@unique([email])
   @@map("user")
@@ -130,4 +131,29 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model AiConversation {
+  id        String      @id @default(cuid())
+  userId    String
+  title     String      @default("New conversation")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  AiMessage[]
+
+  @@index([userId])
+  @@map("ai_conversation")
+}
+
+model AiMessage {
+  id             String         @id @default(cuid())
+  conversationId String
+  role           String
+  content        String
+  createdAt      DateTime       @default(now())
+  conversation   AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("ai_message")
 }

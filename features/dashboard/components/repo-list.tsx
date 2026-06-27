@@ -18,6 +18,7 @@ import { DashboardRepo } from "../lib/types";
 import { statusBadge } from "../lib/status-style";
 import { LockIcon, LockKeyOpenIcon, StarIcon } from "@phosphor-icons/react";
 import SyncRepoButton from "@/features/repo-sync/components/sync-repo-button";
+import { EmptyStateIllustration } from "@/components/ui/empty-state";
 
 type Filter = "all" | "public" | "private";
 
@@ -124,8 +125,16 @@ export function RepoList() {
       } else if (visibleRepos.length === 0) {
         rows = (
           <TableRow>
-            <TableCell colSpan={7} className="text-center text-muted-foreground">
-              No repositories found.
+            <TableCell colSpan={7} className="py-12 text-center">
+              <div className="flex flex-col items-center justify-center gap-3">
+                <EmptyStateIllustration />
+                <div className="flex flex-col items-center gap-1 mt-2">
+                  <span className="font-semibold text-sm text-foreground">No repositories found</span>
+                  <span className="text-xs text-muted-foreground max-w-sm">
+                    Try linking more repositories or check your connection status.
+                  </span>
+                </div>
+              </div>
             </TableCell>
           </TableRow>
         );
@@ -134,7 +143,7 @@ export function RepoList() {
       }
 
       return (
-        <div className="flex flex-1 flex-col gap-4 p-6">
+        <div className="flex flex-1 flex-col gap-6 p-8 lg:p-10">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <Tabs
               value={filter}
