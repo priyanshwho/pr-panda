@@ -8,12 +8,6 @@ interface ConcentricMenuProps {
   currentSection: string;
 }
 
-interface Poster {
-  id: string;
-  title: string;
-  img: string;
-  angle: number;
-}
 
 export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, currentSection }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,13 +31,6 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
   const baseClosed = isMobile ? [16, 24, 34, 44, 54, 64] : [20, 30, 42, 54, 66, 78];
   const deltaClosed = isMobile ? 4 : 6; // Reduced closed expansion width
 
-  // Gallery posters fanning behind
-  const posters: Poster[] = [
-    { id: 'p1', title: 'Panda Harmony', img: '/aesthetic_panda_1.png', angle: -45 },
-    { id: 'p2', title: 'Minimalist Form', img: '/aesthetic_panda_2.png', angle: -20 },
-    { id: 'p3', title: 'Geometric Landscape', img: '/aesthetic_panda_3.png', angle: 10 },
-    { id: 'p4', title: 'Symmetry & Form', img: '/aesthetic_panda_4.png', angle: 35 },
-  ];
 
   // Helper to get active ring size dynamically (stable index 0 center)
   const getRingSize = (index: number) => {
@@ -148,77 +135,6 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
       <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30">
         <div className="relative w-0 h-0 flex items-center justify-center">
           
-          {/* FANNED BACKGROUND GALLERY */}
-          <AnimatePresence>
-            {isOpen && (
-              <div className="absolute bottom-0 w-0 h-0 pointer-events-none select-none">
-                {posters.map((poster, index) => {
-                  let customAngle = poster.angle;
-                  let customScale = 1;
-                  let customZIndex = 10;
-                  let customOpacity = 0.85;
-
-                  if (hoveredRing === 5) {
-                    customAngle = poster.angle * 1.35;
-                    customScale = index === 0 || index === 2 ? 1.08 : 1.02;
-                    customOpacity = 0.95;
-                  } else if (hoveredRing === 4) {
-                    customAngle = poster.angle * 0.6;
-                    customScale = 1.05;
-                  } else if (hoveredRing === 3) {
-                    if (poster.id === 'p4') {
-                      customAngle = 0;
-                      customScale = 1.25;
-                      customZIndex = 15;
-                      customOpacity = 1;
-                    } else {
-                      customOpacity = 0.2;
-                      customScale = 0.85;
-                    }
-                  } else if (hoveredRing === 2) {
-                    customAngle = poster.angle * 1.5;
-                    customScale = 0.9;
-                    customOpacity = 0.4;
-                  } else if (hoveredRing === 1) {
-                    customAngle = (index - 1.5) * 15;
-                    customScale = 1.0;
-                    customOpacity = 0.7;
-                  }
-
-                  return (
-                    <motion.div
-                      key={poster.id}
-                      initial={{ opacity: 0, rotate: 0, scale: 0.2, y: 100 }}
-                      animate={{ 
-                        opacity: customOpacity, 
-                        rotate: customAngle, 
-                        scale: customScale,
-                        y: -240, 
-                        zIndex: customZIndex
-                      }}
-                      exit={{ opacity: 0, rotate: 0, scale: 0.2, y: 100 }}
-                      transition={{
-                        type: 'spring' as const,
-                        stiffness: 85,
-                        damping: 12,
-                        delay: index * 0.04
-                      }}
-                      className="absolute w-40 h-56 md:w-52 md:h-72 bg-white rounded-md shadow-2xl border border-black/10 overflow-hidden left-[-80px] md:left-[-104px] top-[-112px] md:top-[-144px]"
-                      style={{
-                        transformOrigin: '50% 180%',
-                      }}
-                    >
-                      <img 
-                        src={poster.img} 
-                        alt={poster.title} 
-                        className="w-full h-full object-cover"
-                      />
-                    </motion.div>
-                  );
-                })}
-              </div>
-            )}
-          </AnimatePresence>
 
           {/* CONCENTRIC RINGS */}
           
