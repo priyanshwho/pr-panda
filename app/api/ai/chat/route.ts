@@ -2,6 +2,9 @@ import { streamText } from "ai";
 
 import { createGroq } from "@ai-sdk/groq";
 import { requireAuth } from "@/features/auth/actions";
+import { getUserInstallationId } from "@/features/github/server/installation";
+import { prisma } from "@/lib/db";
+import { getPineconeIndex } from "@/features/pinecone/client";
 import { buildAssistantContext } from "@/features/ai-assistant/server/build-context";
 import {
   createConversation,
@@ -57,9 +60,57 @@ export async function POST(request: Request) {
     return Response.json({ error: "No user message" }, { status: 400 });
   }
 
+  // 1. Fetch user installation and perform codebase semantic RAG search
+  const installationId = await getUserInstallationId(userId);
+  let codebaseSnippets: string[] = [];
+
+  if (installationId) {
+    // 2. Fetch synced repositories
+    const syncedRepos = await prisma.repoSync.findMany({
+      where: {
+        installationId,
+        status: "synced",
+      },
+    });
+
+    if (syncedRepos.length > 0) {
+      // 3. Search matched snippets in Pinecone
+      const searchPromises = syncedRepos.map(async (repo) => {
+        const namespace = `${repo.repoFullName.replace("/", "--")}--codebase`;
+        try {
+          const index = getPineconeIndex();
+          const response = await index.namespace(namespace).searchRecords({
+            query: { topK: 3, inputs: { text: lastUserMessage.content } },
+          });
+
+          const snippets: string[] = [];
+          for (const hit of response.result.hits) {
+            const fields = hit.fields as { text?: string; filePath?: string };
+            if (fields.text) {
+              snippets.push(`Repository: ${repo.repoFullName}\nFile: ${fields.filePath}\n${fields.text}`);
+            }
+          }
+          return snippets;
+        } catch (err) {
+          console.error(`Failed to search namespace ${namespace}:`, err);
+          return [];
+        }
+      });
+
+      const allResults = await Promise.all(searchPromises);
+      codebaseSnippets = allResults.flat();
+    }
+  }
+
   // Build context from live DB data
   const context = await buildAssistantContext(userId);
-  const systemPrompt = ASSISTANT_SYSTEM_PROMPT.replace("{CONTEXT}", context) +
+  
+  let finalContext = context;
+  if (codebaseSnippets.length > 0) {
+    finalContext += `\n\n### Synced Codebase Context (Semantic Search results for user's query: "${lastUserMessage.content}")\n${codebaseSnippets.join("\n\n")}`;
+  }
+
+  const systemPrompt = ASSISTANT_SYSTEM_PROMPT.replace("{CONTEXT}", finalContext) +
     (currentPage ? `\n\n**User is currently viewing**: ${currentPage}` : "");
 
   // Get or create conversation
