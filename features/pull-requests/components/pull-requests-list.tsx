@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { Input } from "@/components/ui/input";
@@ -60,6 +60,21 @@ export function PullRequestsList({ pullRequests }: PullRequestsListProps) {
       return true;
     });
   }, [pullRequests, filter, search]);
+
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 8;
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [filter, search]);
+
+  const paginatedPrs = useMemo(() => {
+    const start = (page - 1) * itemsPerPage;
+    return filteredPrs.slice(start, start + itemsPerPage);
+  }, [filteredPrs, page]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredPrs.length / itemsPerPage));
 
   return (
     <div className="flex flex-col gap-6 p-8 lg:p-10">
@@ -127,7 +142,7 @@ export function PullRequestsList({ pullRequests }: PullRequestsListProps) {
                 </TableCell>
               </TableRow>
             ) : (
-              filteredPrs.map((pr) => (
+              paginatedPrs.map((pr) => (
                 <TableRow key={pr.id}>
                   <TableCell>
                     <div className="flex flex-col">
@@ -177,6 +192,36 @@ export function PullRequestsList({ pullRequests }: PullRequestsListProps) {
             )}
           </TableBody>
         </Table>
+        {filteredPrs.length > itemsPerPage && (
+          <div className="flex items-center justify-between border-t border-border/40 bg-muted/10 px-6 py-4">
+            <span className="text-xs text-muted-foreground select-none">
+              Showing {((page - 1) * itemsPerPage) + 1} to {Math.min(page * itemsPerPage, filteredPrs.length)} of {filteredPrs.length} PRs
+            </span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === 1}
+                onClick={() => setPage((p) => p - 1)}
+                className="cursor-pointer select-none"
+              >
+                Previous
+              </Button>
+              <span className="text-xs font-medium px-2 min-w-[3rem] text-center select-none text-muted-foreground">
+                Page {page} of {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === totalPages}
+                onClick={() => setPage((p) => p + 1)}
+                className="cursor-pointer select-none"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
