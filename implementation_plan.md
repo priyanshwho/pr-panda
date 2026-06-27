@@ -65,7 +65,7 @@ The assistant is configured to know:
 - [x] `features/overview/server/get-overview.ts` (queries wrapped in `Promise.all`)
 
 ### 2c — Layout Auth Caching
-- [ ] `layout.tsx` (cache `requireAuth` calls)
+- [x] `layout.tsx` (cache `requireAuth` calls)
 
 ---
 

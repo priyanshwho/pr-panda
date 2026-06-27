@@ -25,12 +25,13 @@ export async function signInWithGithub(formData: FormData) {
     }
 }
 
-export async function getServerSession() {
+import { cache } from "react";
 
+export const getServerSession = cache(async () => {
     return auth.api.getSession({
         headers: await headers(),
     })
-}
+});
 
 
 export async function requireAuth(redirectTo = SIGN_IN_PATH) {
