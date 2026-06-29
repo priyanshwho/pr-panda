@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { CreativePricing } from "@/components/ui/creative-pricing";
 import type { PricingTier } from "@/components/ui/creative-pricing";
 import { SimpleFooter } from "@/components/ui/simple-footer";
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
 import { Pencil, Star, Sparkles, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PageContentProps {
   activeSection: string;
@@ -56,7 +58,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-12 flex flex-col min-h-screen"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-4 flex flex-col min-h-screen"
       >
         {/* Title Section */}
         <div className="max-w-4xl flex flex-col justify-center">
@@ -302,7 +304,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-12"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-4"
       >
         {/* Header Section */}
         <motion.div 
@@ -630,7 +632,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-12"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-4"
       >
         <CreativePricing 
           tag="PR Panda Pricing"
@@ -643,15 +645,8 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
     );
   }
 
-  // RENDER TESTIMONIALS PAGE (using stories vertical list layout)
+  // RENDER TESTIMONIALS PAGE (using stagger testimonials component)
   if (activeSection === 'testimonials') {
-    const reviews = [
-      { num: '01', title: '"pr panda has cut down our pull request latency by 40%. the context retrieval is amazingly precise."', author: 'john doe • senior dev, cloudscale' },
-      { num: '02', title: '"the security scans alone are worth it. caught an exposed stripe development key in a draft pr."', author: 'sarah lim • cto, devflow inc' },
-      { num: '03', title: '"very impressed by the rag feature. it retrieves previous code patterns from the repository via pinecone."', author: 'marcus wright • full stack eng, octave' },
-      { num: '04', title: '"integration with inngest and openrouter makes our automated developer loop run without any glitch."', author: 'elena rostova • lead architect, apex' }
-    ];
-
     return (
       <motion.div
         key="testimonials"
@@ -659,38 +654,17 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-12"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-4"
       >
         <motion.div variants={childVariants} className="mb-12 border-b border-border pb-6">
-          <span className="text-muted-foreground font-sans tracking-widest uppercase text-xs font-semibold block mb-1">customer journals</span>
+          {/* <span className="text-muted-foreground font-sans tracking-widest uppercase text-xs font-semibold block mb-1">customer journals</span> */}
           <h2 className="font-display font-black text-4xl md:text-5xl uppercase tracking-tighter text-foreground">testimonials</h2>
         </motion.div>
 
-        <div className="flex flex-col">
-          {reviews.map((review) => (
-            <motion.div
-              key={review.num}
-              variants={childVariants}
-              whileHover={{ x: 8 }}
-              className="group border-b border-border py-8 flex gap-6 md:gap-12 items-start cursor-pointer hover:border-foreground/40 transition-colors"
-            >
-              <span className="font-display font-black text-xl md:text-2xl text-muted-foreground/40 group-hover:text-foreground transition-colors">
-                {review.num}
-              </span>
-              <div className="flex-1">
-                <h3 className="font-display font-black text-lg md:text-xl group-hover:text-primary transition-colors uppercase tracking-tight leading-tight mb-2 text-foreground">
-                  {review.title}
-                </h3>
-                <div className="flex gap-4 text-xs font-sans text-muted-foreground uppercase font-medium">
-                  <span>{review.author}</span>
-                </div>
-              </div>
-              <span className="font-display font-black text-2xl opacity-0 group-hover:opacity-100 transition-opacity self-center text-foreground">
-                →
-              </span>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div variants={childVariants} className="w-full py-4">
+          <StaggerTestimonials />
+        </motion.div>
+        
         <SimpleFooter onNavigate={onNavigate} />
       </motion.div>
     );
@@ -713,7 +687,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-12"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-4"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-8 items-start">
           
