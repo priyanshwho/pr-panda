@@ -166,7 +166,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
 
               <div className="bg-muted/50 p-3 rounded-lg border border-border/50 text-[10px] font-mono leading-relaxed text-muted-foreground">
                 <span className="text-foreground font-bold block mb-1">🐼 PR PANDA Suggestion:</span>
-                "Refactored apiRouter initialization to use local environment variables instead of hardcoded strings."
+                "Consider extracting the repeated API configuration bindings into a generic reusable hook. The current implementation duplicates connection logic across 4 components, violating DRY principles. Additionally, the fallback state lacks proper error handling for timeout scenarios."
               </div>
             </div>
           </div>

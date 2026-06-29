@@ -190,28 +190,29 @@ export const StaggerTestimonials: React.FC = () => {
           />
         );
       })}
-      <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-3 z-20">
-        <button
-          onClick={() => handleMove(-1)}
-          className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
-            "bg-card text-foreground hover:bg-primary hover:text-white"
-          )}
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          onClick={() => handleMove(1)}
-          className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
-            "bg-card text-foreground hover:bg-primary hover:text-white"
-          )}
-          aria-label="Next testimonial"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
+      <button
+        onClick={() => handleMove(-1)}
+        className={cn(
+          "absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20",
+          "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
+          "bg-white text-black hover:bg-primary hover:text-white"
+        )}
+        aria-label="Previous testimonial"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      <button
+        onClick={() => handleMove(1)}
+        className={cn(
+          "absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20",
+          "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
+          "bg-white text-black hover:bg-primary hover:text-white"
+        )}
+        aria-label="Next testimonial"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
     </div>
   );
 };

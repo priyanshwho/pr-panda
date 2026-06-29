@@ -55,9 +55,9 @@ export default function Home() {
       </div>
 
       {/* Modern minimal footer branding */}
-      <footer className="fixed bottom-4 left-6 md:left-12 pointer-events-none select-none z-10 text-[10px] font-sans text-muted-foreground/30 uppercase tracking-widest">
+      {/* <footer className="fixed bottom-4 left-6 md:left-12 pointer-events-none select-none z-10 text-[10px] font-sans text-muted-foreground/30 uppercase tracking-widest">
         © 2026 pr panda. all rights reserved.
-      </footer>
+      </footer> */}
     </div>
   );
 }
