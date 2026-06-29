@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Header } from "@/components/landing/header";
 import { PageContent } from "@/components/landing/PageContent";
@@ -8,6 +8,10 @@ import { ConcentricMenu } from "@/components/landing/ConcentricMenu";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeSection]);
 
   return (
     <div className="relative min-h-screen bg-background text-foreground selection:bg-primary/20 flex flex-col overflow-x-hidden font-sans">
@@ -19,7 +23,7 @@ export default function Home() {
 
       {/* Visual background grid pattern for premium aesthetics, adapts dynamically via currentColor */}
       <div 
-        className="fixed inset-0 pointer-events-none opacity-3 dark:opacity-8 z-0 text-foreground" 
+        className="fixed inset-0 pointer-events-none opacity-10 dark:opacity-15 z-0 text-foreground" 
         style={{
           backgroundImage: `
             linear-gradient(to right, currentColor 1px, transparent 1px),

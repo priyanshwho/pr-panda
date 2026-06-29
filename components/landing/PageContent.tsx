@@ -113,47 +113,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
           <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         </motion.div>
 
-        {/* 3-Column Core Highlights */}
-        <motion.div 
-          variants={childVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
-        >
-          {/* Analysis Card */}
-          <div className="relative group transition-all duration-300 flex flex-col cursor-pointer">
-            <div className="absolute inset-0 bg-card border-2 border-foreground rounded-2xl shadow-[4px_4px_0px_0px] shadow-foreground transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:translate-x-[-4px] group-hover:translate-y-[-4px]" />
-            <div className="relative p-6 flex-1 flex flex-col z-10">
-              <span className="font-mono text-[10px] uppercase font-bold text-primary mb-2 block">01. Automated Analysis</span>
-              <span className="font-display font-black text-lg uppercase block mb-3 text-foreground">Analysis</span>
-              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
-                We translate complex pull request diffs into clean, line-specific comments. PR Panda reviews structural changes, identifying styling quirks, syntax bugs, and naming mismatches instantly.
-              </p>
-            </div>
-          </div>
 
-          {/* Context Card */}
-          <div className="relative group transition-all duration-300 flex flex-col cursor-pointer">
-            <div className="absolute inset-0 bg-card border-2 border-foreground rounded-2xl shadow-[4px_4px_0px_0px] shadow-foreground transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:translate-x-[-4px] group-hover:translate-y-[-4px]" />
-            <div className="relative p-6 flex-1 flex flex-col z-10">
-              <span className="font-mono text-[10px] uppercase font-bold text-primary mb-2 block">02. Codebase Context</span>
-              <span className="font-display font-black text-lg uppercase block mb-3 text-foreground">Context</span>
-              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
-                Secure vector codebase indexing. PR Panda queries localized directory files via Pinecone vectors to understand custom API patterns, class references, and developer design systems before posting reviews.
-              </p>
-            </div>
-          </div>
-
-          {/* Security Card */}
-          <div className="relative group transition-all duration-300 flex flex-col cursor-pointer">
-            <div className="absolute inset-0 bg-card border-2 border-foreground rounded-2xl shadow-[4px_4px_0px_0px] shadow-foreground transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:translate-x-[-4px] group-hover:translate-y-[-4px]" />
-            <div className="relative p-6 flex-1 flex flex-col z-10">
-              <span className="font-mono text-[10px] uppercase font-bold text-primary mb-2 block">03. Security Guardrails</span>
-              <span className="font-display font-black text-lg uppercase block mb-3 text-foreground">Security</span>
-              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
-                Automated vulnerability scans on push triggers. Sweep commits for exposed API tokens, database connection secrets, and SQL query flaws, keeping your main branch secure.
-              </p>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Continuous Review Loop Details (Expanded Content) */}
         <motion.div 
@@ -278,13 +238,13 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
               </div>
             </div>
 
-            {/* Card 6: Webhook Integrations */}
+            {/* Card 6: AI Chat Assistant */}
             <div className="relative group transition-all duration-300 flex flex-col cursor-pointer">
               <div className="absolute inset-0 bg-card border-2 border-foreground rounded-2xl shadow-[4px_4px_0px_0px] shadow-foreground transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:translate-x-[-4px] group-hover:translate-y-[-4px]" />
               <div className="relative p-6 flex-1 flex flex-col justify-between z-10">
-                <span className="font-display font-bold text-base block mb-2 text-foreground">Webhook Integrations</span>
+                <span className="font-display font-bold text-base block mb-2 text-foreground">AI Chat Assistant</span>
                 <p className="text-xs text-muted-foreground leading-relaxed font-sans">
-                  Runs automatically on GitHub event dispatches. No manual compilation triggers or local CLI installations required.
+                  Interact with PR Panda directly inside your GitHub pull request threads. Request alternative refactoring options, ask logic clarifying questions, and get safe revisions.
                 </p>
               </div>
             </div>
@@ -582,26 +542,26 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
   if (activeSection === 'pricing') {
     const pricingTiers: PricingTier[] = [
       {
-        name: "Developer",
+        name: "Free",
         icon: <Pencil className="w-5 h-5" />,
-        price: 19,
-        description: "Perfect for active developers",
+        price: "Free",
+        description: "Perfect to test drive automated audits",
         color: "amber",
         features: [
           "1 active repository",
-          "50 automated reviews / mo",
+          "15 automated reviews / mo",
           "Standard queue speed",
           "Inline GitHub suggestions",
         ],
       },
       {
-        name: "Team",
+        name: "Developer",
         icon: <Star className="w-5 h-5" />,
-        price: 79,
-        description: "For growing dev teams",
+        price: "₹99",
+        description: "For active developers & small projects",
         color: "blue",
         features: [
-          "10 active repositories",
+          "5 active repositories",
           "Unlimited reviews & scans",
           "Priority queue speed",
           "Custom guideline presets",
@@ -612,8 +572,8 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
       {
         name: "Enterprise",
         icon: <Sparkles className="w-5 h-5" />,
-        price: 149,
-        description: "For large organizations",
+        price: "₹199",
+        description: "For large teams & production scale",
         color: "purple",
         features: [
           "Unlimited repositories",

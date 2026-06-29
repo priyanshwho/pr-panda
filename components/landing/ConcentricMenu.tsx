@@ -132,7 +132,7 @@ export const ConcentricMenu: React.FC<ConcentricMenuProps> = ({ onNavigate, curr
       </AnimatePresence>
 
       {/* Main Container positioned with respect to top */}
-      <div className="absolute top-[80vh] md:top-[85vh] left-1/2 -translate-x-1/2 z-30">
+      <div className="absolute top-[75vh] md:top-[80vh] left-1/2 -translate-x-1/2 z-30">
         <div className="relative w-0 h-0 flex items-center justify-center">
           
 

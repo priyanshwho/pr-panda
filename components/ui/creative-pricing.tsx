@@ -101,9 +101,9 @@ export function CreativePricing({
                 {/* Price */}
                 <div className="my-6">
                   <span className="text-4xl font-black tracking-tight text-foreground">
-                    {typeof tier.price === 'number' ? `$${tier.price}` : tier.price}
+                    {tier.price}
                   </span>
-                  {typeof tier.price === 'number' && (
+                  {tier.price !== "₹0" && tier.price !== "0" && tier.price !== "Free" && tier.price !== "0rs" && (
                     <span className="text-xs text-muted-foreground font-mono uppercase ml-1">
                       /month
                     </span>
