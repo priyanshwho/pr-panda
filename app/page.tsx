@@ -19,7 +19,7 @@ export default function Home() {
 
       {/* Visual background grid pattern for premium aesthetics, adapts dynamically via currentColor */}
       <div 
-        className="fixed inset-0 pointer-events-none opacity-5 dark:opacity-[0.03] z-0 text-foreground" 
+        className="fixed inset-0 pointer-events-none opacity-3 dark:opacity-8 z-0 text-foreground" 
         style={{
           backgroundImage: `
             linear-gradient(to right, currentColor 1px, transparent 1px),
@@ -38,7 +38,7 @@ export default function Home() {
       {/* Main page content container */}
       <main className="flex-1 relative z-10 w-full">
         <AnimatePresence mode="wait">
-          <PageContent key={activeSection} activeSection={activeSection} />
+          <PageContent key={activeSection} activeSection={activeSection} onNavigate={setActiveSection} />
         </AnimatePresence>
       </main>
 

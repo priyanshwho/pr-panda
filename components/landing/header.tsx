@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ onLogoClick, currentSection }) =
           className="flex items-center gap-2.5 transition-all duration-300 hover:opacity-80 active:scale-95 cursor-pointer"
           aria-label="PR PANDA Home"
         >
-          <span className="text-2xl filter drop-shadow-[0_0_8px_rgba(239,68,68,0.2)]">🐼</span>
+          <img src="/logo2.png" alt="PR PANDA Logo" className="h-8 w-auto filter drop-shadow-[0_0_8px_rgba(239,68,68,0.2)]" />
           <span className="text-xl font-black tracking-wider uppercase bg-gradient-to-r from-foreground via-foreground/90 to-foreground/75 bg-clip-text text-transparent">
             PR PANDA
           </span>
