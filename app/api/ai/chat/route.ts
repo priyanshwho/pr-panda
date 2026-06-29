@@ -61,6 +61,25 @@ export async function POST(request: Request) {
       return Response.json({ error: "No user message" }, { status: 400 });
     }
 
+    // Helper to safely extract content (AI SDK v7 UI message format sends text inside parts array)
+    const getMessageText = (msg: any): string => {
+      if (typeof msg.content === "string" && msg.content) {
+        return msg.content;
+      }
+      if (Array.isArray(msg.parts)) {
+        return msg.parts
+          .filter((p: any) => p.type === "text")
+          .map((p: any) => p.text)
+          .join("");
+      }
+      return "";
+    };
+
+    const userMessageText = getMessageText(lastUserMessage);
+    if (!userMessageText) {
+      return Response.json({ error: "No text content in user message" }, { status: 400 });
+    }
+
     // 1. Fetch user installation and perform codebase semantic RAG search
     const installationId = await getUserInstallationId(userId);
     let codebaseSnippets: string[] = [];
@@ -81,7 +100,7 @@ export async function POST(request: Request) {
           try {
             const index = getPineconeIndex();
             const response = await index.namespace(namespace).searchRecords({
-              query: { topK: 3, inputs: { text: lastUserMessage.content } },
+              query: { topK: 3, inputs: { text: userMessageText } },
             });
 
             const snippets: string[] = [];
@@ -108,7 +127,7 @@ export async function POST(request: Request) {
     
     let finalContext = context;
     if (codebaseSnippets.length > 0) {
-      finalContext += `\n\n### Synced Codebase Context (Semantic Search results for user's query: "${lastUserMessage.content}")\n${codebaseSnippets.join("\n\n")}`;
+      finalContext += `\n\n### Synced Codebase Context (Semantic Search results for user's query: "${userMessageText}")\n${codebaseSnippets.join("\n\n")}`;
     }
 
     const systemPrompt = ASSISTANT_SYSTEM_PROMPT.replace("{CONTEXT}", finalContext) +
@@ -122,11 +141,11 @@ export async function POST(request: Request) {
     }
 
     // Save the user message
-    await saveMessage(conversationId, "user", lastUserMessage.content);
+    await saveMessage(conversationId, "user", userMessageText);
 
     // Auto-title after first user message
     if (messages.filter((m) => m.role === "user").length === 1) {
-      const title = lastUserMessage.content.slice(0, 60).trim();
+      const title = userMessageText.slice(0, 60).trim();
       await updateConversationTitle(conversationId, title);
     }
 
