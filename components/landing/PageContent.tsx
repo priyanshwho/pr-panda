@@ -48,7 +48,7 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection }) => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full max-w-6xl mx-auto px-6 pt-12 pb-44 flex flex-col min-h-screen"
+        className="w-full max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-44 flex flex-col min-h-screen"
       >
         {/* Title Section */}
         <div className="max-w-4xl flex flex-col justify-center">
@@ -84,10 +84,9 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection }) => {
           </motion.p>
         </div>
 
-        {/* Theme-Aware Hero Image Container */}
         <motion.div 
           variants={childVariants}
-          className="mt-12 rounded-2xl overflow-hidden border border-border shadow-2xl relative group aspect-[16/9] w-full max-w-5xl bg-muted"
+          className="mt-4 rounded-2xl overflow-hidden border border-border shadow-2xl relative group aspect-[16/9] w-full max-w-5xl bg-muted"
         >
           {/* Light Theme Image */}
           <img 

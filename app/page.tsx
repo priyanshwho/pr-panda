@@ -43,7 +43,7 @@ export default function Home() {
       </main>
 
       {/* Interactive Concentric Ring Menu container - zero height to allow background clicks */}
-      <div className="fixed bottom-0 left-0 w-full h-0 z-40 overflow-visible">
+      <div className="fixed top-0 left-0 w-full h-0 z-40 overflow-visible">
         <ConcentricMenu 
           onNavigate={(section) => setActiveSection(section)} 
           currentSection={activeSection} 
