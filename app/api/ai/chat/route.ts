@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { streamText, createUIMessageStreamResponse } from "ai";
 import { createGroq } from "@ai-sdk/groq";
 import { openrouter } from "@/features/ai";
 import { requireAuth } from "@/features/auth/actions";
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
       ? createGroq({ apiKey: groqKey })("llama-3.3-70b-versatile")
       : openrouter("google/gemini-3.1-flash-lite");
 
-    // Stream the response — errors inside the stream happen async, so use onError to log them
+    // Stream using UIMessage protocol (required by @ai-sdk/react useChat + DefaultChatTransport)
     const result = streamText({
       model: model as any,
       system: systemPrompt,
@@ -158,14 +158,13 @@ export async function POST(request: Request) {
       },
     });
 
-    const response = result.toTextStreamResponse();
-    const headers = new Headers(response.headers);
-    headers.set("X-Conversation-Id", conversationId);
-
-    return new Response(response.body, {
-      status: response.status,
-      headers,
+    const response = createUIMessageStreamResponse({
+      status: 200,
+      stream: result.toUIMessageStream(),
+      headers: { "X-Conversation-Id": conversationId },
     });
+
+    return response;
   } catch (err: any) {
     // Re-throw Next.js redirect/not-found signals so they work correctly
     if (err?.digest?.startsWith("NEXT_REDIRECT") || err?.digest?.startsWith("NEXT_NOT_FOUND")) {
