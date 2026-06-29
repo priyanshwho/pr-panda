@@ -130,7 +130,7 @@ export async function POST(request: Request) {
 
     // Model selection: Fallback to OpenRouter if Groq is not configured
     const hasGroq = !!process.env.GROQ_API_KEY;
-    const hasOpenRouter = !!process.env.YOUR_OPENROUTER_API_KEY;
+    const hasOpenRouter = !!process.env.YOUR_OPENROUTER_API_KEY || !!process.env.YOUR_OPENROUTER_APT_KEY;
 
     if (!hasGroq && !hasOpenRouter) {
       return Response.json({ error: "No LLM API keys set (GROQ_API_KEY or YOUR_OPENROUTER_API_KEY)." }, { status: 500 });
