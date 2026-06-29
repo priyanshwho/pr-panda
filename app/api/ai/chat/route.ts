@@ -163,11 +163,17 @@ export async function POST(request: Request) {
       ? createGroq({ apiKey: groqKey })("llama-3.3-70b-versatile")
       : openrouter("google/gemini-3.1-flash-lite");
 
+    // Normalize messages from UIMessage format (parts array) to LLM format (content string)
+    const normalizedMessages = messages.map((m: any) => ({
+      role: m.role as "user" | "assistant",
+      content: getMessageText(m),
+    })).filter((m: any) => m.content);
+
     // Stream using UIMessage protocol (required by @ai-sdk/react useChat + DefaultChatTransport)
     const result = streamText({
       model: model as any,
       system: systemPrompt,
-      messages,
+      messages: normalizedMessages,
       temperature: 0.5,
       onFinish: async ({ text }) => {
         await saveMessage(conversationId!, "assistant", text);
