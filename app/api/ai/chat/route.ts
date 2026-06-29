@@ -43,9 +43,11 @@ You have been given a snapshot of the user's workspace data below. Use it to giv
 {CONTEXT}`;
 
 export async function POST(request: Request) {
+  // requireAuth uses redirect() which throws internally — must be OUTSIDE try-catch
+  const session = await requireAuth();
+  const userId = session.user.id;
+
   try {
-    const session = await requireAuth();
-    const userId = session.user.id;
 
     const body = await request.json();
     const { messages, conversationId: existingConversationId, currentPage } = body as {
@@ -161,7 +163,11 @@ export async function POST(request: Request) {
       headers,
     });
   } catch (err: any) {
+    // Re-throw Next.js redirect/not-found signals so they work correctly
+    if (err?.digest?.startsWith("NEXT_REDIRECT") || err?.digest?.startsWith("NEXT_NOT_FOUND")) {
+      throw err;
+    }
     console.error("Chat API route error:", err);
-    return Response.json({ error: err.message, stack: err.stack }, { status: 500 });
+    return Response.json({ error: err.message }, { status: 500 });
   }
 }
