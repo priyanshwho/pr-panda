@@ -130,27 +130,31 @@ export async function POST(request: Request) {
       await updateConversationTitle(conversationId, title);
     }
 
-    // Model selection: Fallback to OpenRouter if Groq is not configured
-    const hasGroq = !!process.env.GROQ_API_KEY;
-    const hasOpenRouter = !!process.env.YOUR_OPENROUTER_API_KEY || !!process.env.YOUR_OPENROUTER_APT_KEY;
+    // Model selection: use Groq if key exists, otherwise OpenRouter
+    const groqKey = process.env.GROQ_API_KEY;
+    const openRouterKey = process.env.YOUR_OPENROUTER_API_KEY || process.env.YOUR_OPENROUTER_APT_KEY;
 
-    if (!hasGroq && !hasOpenRouter) {
-      return Response.json({ error: "No LLM API keys set (GROQ_API_KEY or YOUR_OPENROUTER_API_KEY)." }, { status: 500 });
+    if (!groqKey && !openRouterKey) {
+      return Response.json({ error: "No LLM API keys configured on this server." }, { status: 500 });
     }
 
-    const model = hasGroq
-      ? createGroq({ apiKey: process.env.GROQ_API_KEY })("llama-3.3-70b-versatile")
-      : openrouter("google/gemini-2.5-flash");
+    console.log("Using model provider:", groqKey ? "Groq" : "OpenRouter");
 
-    // Stream the response
+    const model = groqKey
+      ? createGroq({ apiKey: groqKey })("llama-3.3-70b-versatile")
+      : openrouter("google/gemini-3.1-flash-lite");
+
+    // Stream the response — errors inside the stream happen async, so use onError to log them
     const result = streamText({
       model: model as any,
       system: systemPrompt,
       messages,
       temperature: 0.5,
       onFinish: async ({ text }) => {
-        // Persist the assistant's full response
         await saveMessage(conversationId!, "assistant", text);
+      },
+      onError: (err) => {
+        console.error("streamText internal error:", err);
       },
     });
 
