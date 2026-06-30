@@ -27,10 +27,11 @@ export function AiReviewMarkdown({ content }: AiReviewMarkdownProps) {
   const blocks: React.ReactNode[] = [];
   const lines = content.split("\n");
 
-  let currentBlockType: "paragraph" | "code" | "list" | null = null;
+  let currentBlockType: "paragraph" | "code" | "list" | "table" | null = null;
   let codeBlockLines: string[] = [];
   let codeBlockLang = "";
   let listItems: string[] = [];
+  let tableRows: string[] = [];
 
   const flushBlock = (index: number) => {
     if (currentBlockType === "code") {
@@ -57,6 +58,39 @@ export function AiReviewMarkdown({ content }: AiReviewMarkdownProps) {
         </ul>
       );
       listItems = [];
+    } else if (currentBlockType === "table" && tableRows.length > 0) {
+      const headers = tableRows[0].split("|").map(s => s.trim()).filter((s, i, arr) => s !== "" || (i !== 0 && i !== arr.length - 1));
+      const bodyRows = tableRows.slice(2).map(row => 
+        row.split("|").map(s => s.trim()).filter((s, i, arr) => s !== "" || (i !== 0 && i !== arr.length - 1))
+      );
+
+      blocks.push(
+        <div key={`table-${index}`} className="my-4 overflow-x-auto rounded-lg border border-foreground/10 bg-card">
+          <table className="w-full text-left text-sm text-foreground/80">
+            <thead className="bg-muted/50 border-b border-foreground/10">
+              <tr>
+                {headers.map((header, idx) => (
+                  <th key={idx} className="px-4 py-2 font-medium">
+                    {parseInlineMarkdown(header)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-foreground/5">
+              {bodyRows.map((row, rowIdx) => (
+                <tr key={rowIdx} className="hover:bg-muted/30">
+                  {row.map((cell, cellIdx) => (
+                    <td key={cellIdx} className="px-4 py-2">
+                      {parseInlineMarkdown(cell)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      tableRows = [];
     }
     currentBlockType = null;
   };
@@ -158,6 +192,16 @@ export function AiReviewMarkdown({ content }: AiReviewMarkdownProps) {
         currentBlockType = "list";
       }
       listItems.push(listMatch[2]);
+      continue;
+    }
+
+    // Table rows
+    if (line.trim().startsWith("|")) {
+      if (currentBlockType !== "table") {
+        flushBlock(idx);
+        currentBlockType = "table";
+      }
+      tableRows.push(line);
       continue;
     }
 
