@@ -15,7 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SIGN_IN_PATH } from "../utils";
-import { CaretCircleUpIcon, SignOutIcon } from "@phosphor-icons/react";
+import { CaretCircleUpIcon, SignOutIcon, Sun, Moon } from "@phosphor-icons/react";
+import { useTheme } from "next-themes";
 
 const DEFAULT_PLAN = "Free";
 
@@ -77,6 +78,8 @@ export function UserMenu({
 }: UserMenuProps) {
   const router = useRouter();
   const displayName = getDisplayName(user);
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -140,6 +143,11 @@ export function UserMenu({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem onClick={() => setTheme(isDark ? "light" : "dark")}>
+            {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            <span>Theme: {isDark ? "Light" : "Dark"}</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onClick={handleSignOut}>
             <SignOutIcon  />
             Log out

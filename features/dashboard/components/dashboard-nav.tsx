@@ -10,6 +10,7 @@ import {
   Gear,
   Robot,
   ChartBar,
+  Folder,
 } from "@phosphor-icons/react";
 
 import {
@@ -29,6 +30,7 @@ import { AiPanel } from "@/features/ai-assistant/components/ai-panel";
 const NAV_ICONS = {
   "layout-dashboard": LayoutIcon,
   "folder-git-2": GitBranch,
+  repositories: Folder,
   github: GithubLogo,
   settings: Gear,
   robot: Robot,

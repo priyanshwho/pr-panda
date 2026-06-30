@@ -19,7 +19,7 @@ export const DASHBOARD_NAV_ITEMS = [
   {
     title: "Repositories",
     href: DASHBOARD_ROUTES.repos,
-    icon: "folder-git-2" as const,
+    icon: "repositories" as const,
   },
    {
     title: "PullRequests",
