@@ -126,10 +126,10 @@ export const PageContent: React.FC<PageContentProps> = ({ activeSection, onNavig
               continuous review loops on every git commit
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed font-sans">
-              Every time you commit updates or push code changes to a GitHub Pull Request, a webhook event is instantly dispatched to the PR Panda server. Our background queue handlers, powered by Inngest, coordinate review generation asynchronously.
+              Every time you push updates or open a GitHub pull request, PR Panda immediately jumps into action. Our automated reviewer analyzes your new code in real time, understanding the changes instantly without slowing down your development flow.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed font-sans">
-              We query a Pinecone vector database index populated with your project embeddings to retrieve contextually matching files. The target code diffs are analyzed along with relevant abstractions using LLM endpoints via OpenRouter, posting detailed, line-specific corrections in under five seconds.
+              By scanning your entire codebase for context, PR Panda doesn't just look at the new lines of code it understands how they interact with your existing system. Within five seconds, you'll receive precise, line by line feedback and actionable suggestions directly in your pull request.
             </p>
           </div>
 

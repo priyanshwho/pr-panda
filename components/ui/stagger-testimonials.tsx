@@ -195,7 +195,7 @@ export const StaggerTestimonials: React.FC = () => {
         className={cn(
           "absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20",
           "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
-          "bg-white text-black hover:bg-primary hover:text-white"
+          "bg-rose-500 text-white hover:bg-rose-600"
         )}
         aria-label="Previous testimonial"
       >
@@ -207,7 +207,7 @@ export const StaggerTestimonials: React.FC = () => {
         className={cn(
           "absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20",
           "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200 cursor-pointer rounded-xl border border-border/60 shadow-sm",
-          "bg-white text-black hover:bg-primary hover:text-white"
+          "bg-rose-500 text-white hover:bg-rose-600"
         )}
         aria-label="Next testimonial"
       >
