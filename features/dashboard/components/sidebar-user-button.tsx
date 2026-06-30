@@ -7,11 +7,6 @@ import { SidebarMenu, SidebarMenuItem, useSidebar } from "@/components/ui/sideba
 import { UserMenu, UserMenuUser } from "@/features/auth/components/user-menu";
 import { authClient } from "@/lib/auth-client";
 import { SIGN_IN_PATH } from "@/features/auth/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 type SidebarUserButtonProps = {
   user: UserMenuUser;
@@ -53,47 +48,37 @@ export function SidebarUserButton({ user, plan }: SidebarUserButtonProps) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <div className="flex items-center gap-1 w-full px-1 py-0.5">
+        <div className="flex items-center gap-1.5 w-full px-1.5 py-1">
 
           {/* Profile section — avatar + name opens dropdown */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-grow min-w-0">
             <UserMenu
               user={user}
               plan={plan}
               variant="profile"
-              className="w-full [&_button]:h-9 [&_button]:w-full [&_button]:justify-start [&_button]:gap-2 [&_button]:px-2"
+              className="w-full flex items-center justify-start gap-2 h-9 px-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-lg transition-colors border border-transparent"
             />
           </div>
 
           {/* Theme toggle */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-sidebar-accent transition-colors"
-              >
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              {isDark ? "Switch to light mode" : "Switch to dark mode"}
-            </TooltipContent>
-          </Tooltip>
+          <button
+            type="button"
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-sidebar-accent transition-colors cursor-pointer border border-transparent"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
 
           {/* Logout */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={handleSignOut}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-              >
-                <SignOut className="h-4 w-4" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top">Log out</TooltipContent>
-          </Tooltip>
+          <button
+            type="button"
+            title="Log out"
+            onClick={handleSignOut}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors cursor-pointer border border-transparent"
+          >
+            <SignOut className="h-4 w-4" />
+          </button>
 
         </div>
       </SidebarMenuItem>

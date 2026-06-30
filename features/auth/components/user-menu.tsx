@@ -115,10 +115,10 @@ export function UserMenu({
         <UserAvatar user={user} size={variant === "compact" ? "default" : "sm"} />
         {variant === "profile" ? (
           <>
-            <span className="max-w-32 truncate text-left text-xs font-medium">
+            <span className="max-w-28 truncate text-left text-xs font-medium text-sidebar-foreground">
               {displayName}
             </span>
-            <CaretCircleUpIcon  className="size-4 text-muted-foreground" />
+            <CaretCircleUpIcon className="size-4 text-muted-foreground ml-auto" />
           </>
         ) : null}
       </DropdownMenuTrigger>

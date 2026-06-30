@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type ChatMessageProps = {
@@ -16,13 +17,23 @@ export function ChatMessage({ role, content, isStreaming }: ChatMessageProps) {
       {/* Avatar */}
       <div
         className={cn(
-          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold",
+          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold overflow-hidden",
           isUser
             ? "bg-primary text-primary-foreground"
             : "bg-sidebar-accent text-sidebar-accent-foreground border border-sidebar-border"
         )}
       >
-        {isUser ? "You" : "🐼"}
+        {isUser ? (
+          "You"
+        ) : (
+          <Image
+            src="/logo2.png"
+            alt="PR Panda"
+            width={28}
+            height={28}
+            className="object-contain"
+          />
+        )}
       </div>
 
       {/* Bubble */}

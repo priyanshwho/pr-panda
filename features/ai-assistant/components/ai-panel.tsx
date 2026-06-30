@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useChat, type UIMessage } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
@@ -192,8 +194,14 @@ export function AiPanel({ isOpen, onClose, recentConversations }: AiPanelProps) 
               )}
               {isLoading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex gap-3 px-4 py-3">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sidebar-accent border border-sidebar-border text-xs">
-                    🐼
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-sidebar-border bg-sidebar-accent">
+                    <Image
+                      src="/logo2.png"
+                      alt="PR Panda"
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                    />
                   </div>
                   <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm bg-sidebar-accent px-4 py-2.5">
                     <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground [animation-delay:0ms]" />
@@ -266,7 +274,14 @@ function WelcomeScreen({ onSuggestionClick }: { onSuggestionClick: (text: string
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 py-8 text-center">
       <div className="flex flex-col items-center gap-3">
-        <div className="text-4xl">🐼</div>
+        <div className="relative h-12 w-12">
+          <Image
+            src="/logo2.png"
+            alt="PR Panda"
+            fill
+            className="object-contain"
+          />
+        </div>
         <h3 className="text-sm font-semibold">PR Panda AI</h3>
         <p className="text-xs text-muted-foreground max-w-[240px]">
           I know your repos, PRs, and usage. Ask me anything about your workspace.
