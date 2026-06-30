@@ -24,7 +24,7 @@ type DashboardHeaderProps = {
  */
 export function DashboardHeader({ title, description }: DashboardHeaderProps) {
   return (
-    <header className="flex min-h-[5rem] shrink-0 items-center gap-2 border-b border-border px-6 py-4">
+    <header className="flex min-h-[3rem] shrink-0 items-center gap-2 border-b border-border px-6 py-2">
       {/* Opens/closes the sidebar on smaller screens or icon-collapsed mode */}
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
