@@ -138,6 +138,13 @@
     @apply font-sans;
     zoom: 1.1;
   }
+
+  /* Compensate sidebar height for html zoom: 1.1
+     Without this, h-svh renders as 110% of viewport,
+     pushing the footer (profile/theme/logout) off-screen */
+  [data-slot="sidebar-container"] {
+    height: calc(100dvh / 1.1) !important;
+  }
   body {
     @apply bg-background text-foreground;
   }
